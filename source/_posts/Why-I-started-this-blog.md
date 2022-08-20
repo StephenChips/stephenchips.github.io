@@ -1,10 +1,8 @@
-```yaml
+---
 title: Why I started this blog
 date: 2022-08-20 12:45:58
 tags: General
-```
-
-Well, for the first article after I successfully set up this blog with Hexo on my Github Pages, I am going to write down the steps and pitfalls I encountered of this process.
+---
 
 # Why I started this blog
 
