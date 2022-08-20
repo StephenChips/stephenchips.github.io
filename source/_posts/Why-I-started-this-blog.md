@@ -4,8 +4,6 @@ date: 2022-08-20 12:45:58
 tags: General
 ---
 
-# Why I started this blog
-
 I compared *VuePress* and *Hexo* before get started, as I have around 3 years of experiences on Vue.js, getting familiar with *VuePress* won't be very hard. Plus, I might take advantage of *Vue.js*, make a theme with Vue.js components, enhance the blog's functionality. But after some researches, I notices that *VuePress* doesn't have an official website of themes, while *Hexo* has. ([[https://hexo.io/themes/]](https://hexo.io/themes/%5D)(the theme site)). That means I have to search around GitHubs and NPM packages for suitable themes, and try each of them out. This definitely takes more efforts than just go to the official website and pick one. One the other hand, I should focus on writing things rather than building the blog itself. Base on above reasons, I choosed *Hexo* instead of *VuePress* at last.
 
 I've already have a *Wordpress* blog hosted on a rented VPS. I even bought a domain for it. But after few months of experience I found that it isn't very suitable to be a programmer's technical blog. It has very poor support for code highlighting (both inline and block codes). Its highlighting plugin provides only few colour themes, and none of them fit well with the blog's theme, and the worst is that it cannot display the highlighted codes while editing.
