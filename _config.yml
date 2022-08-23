@@ -6,9 +6,9 @@
 title: StephenChips
 subtitle: ''
 description: 'A places shares my chips of thoughts'
-keywords:
+keywords: "front end, 前端"
 author: Stephen Chips
-language: zh
+language: en
 timezone: 'Asia/Shanghai'
 
 # URL
@@ -96,8 +96,9 @@ ignore:
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-theme: hexo-theme-one-paper-main
+# Themes: https://hexo.io/themes/
+# theme: hexo-theme-one-paper-main
+theme: landscape 
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
