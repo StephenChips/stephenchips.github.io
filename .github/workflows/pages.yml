@@ -1,19 +1,26 @@
 name: Pages
 
+# Tell Github CI to run the following jobs when we push a new commit to
+# the master branch.
 on:
   push:
     branches:
-      - master  # default branch
+      - master
 
+# The jobs Github CI needs to do
 jobs:
   pages:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      # Job No.1
       - name: Use Node.js 16.x
         uses: actions/setup-node@v2
         with:
           node-version: '16'
+
+      # Job No.2
       - name: Cache NPM dependencies
         uses: actions/cache@v2
         with:
@@ -21,12 +28,29 @@ jobs:
           key: ${{ runner.OS }}-npm-cache
           restore-keys: |
             ${{ runner.OS }}-npm-cache
+
+      # Above two jobs set up a proper Node.js environment which
+      # Hexo requires.
+      #
+      # You can imagine Github CI creates a virtual machine or a
+      # sandbox with nothing but Git before running the jobs. To
+      # run Node.js we should set up the environment first.
+
+      # Job No.3
+      # Install the dependenies
       - name: Install Dependencies
         run: npm install
+      
+      # Job No.4
+      # Generate website files and output them to the `./public` directory.
       - name: Build
         run: npm run build
+
+      # Job No.5
+      # Commit the `./public` directory to the `gh-pages` branch
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+          publish_dir: ./public # this should fill in the output directory
+
