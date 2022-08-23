@@ -43,7 +43,7 @@ The steps is same as creating a normal repository, except the name is fixed:
 
 1. `git init` to create a new repository on your computer.
 2. Create a EMPTY repository named `<YourGithubUsername>.github.io`, DO NOT do any initialization. After created, you should see following webpage:
-   ![](./empty-repo.png)
+   ![](empty-repo.png)
 3. Add remote source and push the local `master` branch to the remote origin.
 4. *DONE!*
 
@@ -73,7 +73,7 @@ The website Hexo generates has a fixed content, that's why it's called "static s
    ```
 
 2. Go to `https://github.com/<username>/<username>.github.io/settings`, look at the sidebar, select **Page**, scroll to **Build and deployment**, let the source to be **Deploy from a branch**, let the branch to be **gh-pages**, and let the root directory to be **/ (root)**.
-    ![Just like this](./set-branch.PNG)
+    ![Just like this](set-branch.PNG)
 
 3. Create `.github/workflows/pages.yml` in your project's root directory, copy following YAML into the file and push it to the remote repository. 
    
