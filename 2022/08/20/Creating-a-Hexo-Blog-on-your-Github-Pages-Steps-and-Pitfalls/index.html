@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <link rel="alternate icon" type="image/png" href="/img/favicon.png">
+    <title>StephenChips | </title>
+    
+<link rel="stylesheet" href="/css/reset.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<link rel="stylesheet" href="/css/markdown.css">
+
+    
+<link rel="stylesheet" href="/css/fonts.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+    <body>
+        <div class="paper">
+            <div class="paper-main">
+                
+                    <div class="post-header">
+    <a class="logo" href="/">StephenChips</a>
+    <a class="go-home" href="/">
+        <svg width="8" height="14" viewBox="0 0 8 14">
+            <path d="M7 1L1 7l6 6" stroke="#000" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</div>
+                
+                <div class="post-main">
+
+    
+        <div class="post-main-title">
+            Creating a Hexo Blog on your Github Pages: Steps and Pitfalls
+        </div>
+        <div class="post-meta">
+            2022-08-20
+        </div>
+    
+
+    <div class="post-md">
+        <h1 id="Setup-Hexo-on-Your-Computer"><a href="#Setup-Hexo-on-Your-Computer" class="headerlink" title="Setup Hexo on Your Computer"></a>Setup Hexo on Your Computer</h1><p>Just type in following command to install Hexo:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Install the command line tool</span></span><br><span class="line">npm install hexo-cli -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use the command line tool to create a new blog inside a folder (created automatically).</span></span><br><span class="line">hexo init hexo-blog</span><br><span class="line"></span><br><span class="line"><span class="comment"># The blog is just a Node.js project, so you have to install packages before using.</span></span><br><span class="line"><span class="built_in">cd</span> hexo-blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>When installatiom is completed, you can type <code>hexo generate</code> to start a local server, then you can visit <code>https://127.0.0.1:4000</code> to preview your blog locally.</p>
+<h2 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h2><p>The configuration here is about the infomation of the site itself. Many of them are quite straightforward, e.g. <code>title</code> is the name of your blog, which will probably be displayed at the home page. You can look up there definition on this <a target="_blank" rel="noopener" href="https://hexo.io/docs/configuration.html">webpage</a>. Through, one option is worth to mention: <code>url</code>.</p>
+<p>Why there is such a option? Is it necessary? Well, yes, it defines the public root of the generated website, usually it can be just your domain address, e.g. <code>https://stephenchips.github.io</code>, or more complicated, the domain address and a base directory, e.g. <code>https://stephenchips.github.io/blog</code>. This configuration become necessary when you want to host not just your blog, but your other applications on your GitHub Page. for example:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://stephenchips.github.io/awesome-online-application</span><br><span class="line">https://stephenchips.github.io/blo</span><br></pre></td></tr></table></figure>
+
+<p>Every assets and HTML files is a subdirectory of <code>/blog</code>, e.g. the home page will be <code>https://stephenchips.github.io/blog/index.html</code>. Everything is complete isolated from the other application, stay inside its “namespace”. Unfortunately, this is determined by the GitHub Page’s setting, or the reverse proxy rules if you hosted Hexo on your own machine, so we need to provide this information to Hexo<br>so that it can get the correct URLs in the output HTML, JavaScript, CSS and image files.</p>
+<h1 id="Create-Your-Github-Page-Repository"><a href="#Create-Your-Github-Page-Repository" class="headerlink" title="Create Your Github Page Repository"></a>Create Your Github Page Repository</h1><p>The steps is same as creating a normal repository, except the name is fixed:</p>
+<ol>
+<li><code>git init</code> to create a new repository on your computer.</li>
+<li>Create a EMPTY repository named <code>&lt;YourGithubUsername&gt;.github.io</code>, DO NOT do any initialization. After created, you should see following webpage:<br><img src="/./Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/empty-repo.png"></li>
+<li>Add remote source and push the local <code>master</code> branch to the remote origin.</li>
+<li><em>DONE!</em></li>
+</ol>
+<p>For example, my Github’s username is <code>StephenChips</code>. To create my Github page, I just need to create a repository called <code>stephenchips.github.io</code> (all lowercase).</p>
+<p>Try pushing an <code>index.html</code> to the remote <code>master</code> branch, then visit your Github Page. The HTML should be render on the browser successfully.</p>
+<p><strong>AGAIN</strong>, please <strong>DO</strong> create an <strong>empty repository</strong>. It isn’t that you can’t setup a Hexo blog on Github Page if you don’t do that, just the main branch’s name will be <code>main</code> instead of <code>master</code> in that case. To make the texts brief, The main branch will always be <code>master</code> in this article. If your main branch’s name isn’t <code>master</code>, you will have to change some configuration options (you will see), which are quite unremarkable and easy to omit, and may lead to wired error messages.</p>
+<h2 id="Explanations"><a href="#Explanations" class="headerlink" title="Explanations"></a>Explanations</h2><ol>
+<li>This repository is unique to your other repositories, since it comes with a running static file server.</li>
+<li>By default, This server serves files from repository’s <code>master</code> branch</li>
+</ol>
+<h1 id="Setup-the-GitHub-CI"><a href="#Setup-the-GitHub-CI" class="headerlink" title="Setup the GitHub CI"></a>Setup the GitHub CI</h1><p>The website Hexo generates has a fixed content, that’s why it’s called “static site generator”, so after you’ve modified or created a post, you have to generate and deploy the site again. It’s quite painful to do it manually, so we will use Github CI to help us automate this process. It will generate and deploy the website for you when we push a new change to the <code>master</code> branch.</p>
+<h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><ol>
+<li><p>Create a branch called <code>gh-pages</code>, you can create remote branch first or create the local branch first, it’s up to you. Personally I recommand you to create it locally, then push it to the remote origin. Because you can create complete empty branch with following command.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git switch --orphan &lt;new branch&gt;</span><br><span class="line">git commit --allow-empty -m <span class="string">&quot;complete empty branch&quot;</span></span><br><span class="line">git push -u origin &lt;new branch&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Go to <code>https://github.com/&lt;username&gt;/&lt;username&gt;.github.io/settings</code>, look at the sidebar, select <strong>Page</strong>, scroll to <strong>Build and deployment</strong>, let the source to be <strong>Deploy from a branch</strong>, let the branch to be <strong>gh-pages</strong>, and let the root directory to be <strong>&#x2F; (root)</strong>.<br> <img src="/./Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/set-branch.PNG" alt="Just like this"></p>
+</li>
+<li><p>Create <code>.github/workflows/pages.yml</code> in your project’s root directory, copy following YAML into the file and push it to the remote repository. </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Pages</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Tell Github CI to generate and deplopy the website</span></span><br><span class="line"><span class="comment"># when we push a new commit to the master branch</span></span><br><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">master</span> <span class="comment"># the main branch&#x27;s name, change it if isn&#x27;t called &quot;master&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The jobs Github CI needs to do to generate and deploy the website</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">pages:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v2</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># Job No.1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Use</span> <span class="string">Node.js</span> <span class="number">16.</span><span class="string">x</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/setup-node@v2</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">&#x27;16&#x27;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># Job No.2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Cache</span> <span class="string">NPM</span> <span class="string">dependencies</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/cache@v2</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">node_modules</span></span><br><span class="line">          <span class="attr">key:</span> <span class="string">$&#123;&#123;</span> <span class="string">runner.OS</span> <span class="string">&#125;&#125;-npm-cache</span></span><br><span class="line">          <span class="attr">restore-keys:</span> <span class="string">|</span></span><br><span class="line"><span class="string">            $&#123;&#123; runner.OS &#125;&#125;-npm-cache</span></span><br><span class="line"><span class="string"></span></span><br><span class="line">      <span class="comment"># Above two jobs set up a proper Node.js environment which</span></span><br><span class="line">      <span class="comment"># Hexo requires.</span></span><br><span class="line">      <span class="comment">#</span></span><br><span class="line">      <span class="comment"># You can imagine Github CI creates a virtual machine or a</span></span><br><span class="line">      <span class="comment"># sandbox with nothing but Git before running the jobs. To</span></span><br><span class="line">      <span class="comment"># run Node.js we should set up the environment first.</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># Job No.3</span></span><br><span class="line">      <span class="comment"># Install the dependenies</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">Dependencies</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">install</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># Job No.4</span></span><br><span class="line">      <span class="comment"># Generate website files and output them to the `./public` directory.</span></span><br><span class="line">      <span class="comment"># The `./public` directory is `.gitignored` in the `master` but isn&#x27;t in the `gh-pages`</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># Job No.5</span></span><br><span class="line">      <span class="comment"># Checkout the `gh-pages`,</span></span><br><span class="line">      <span class="comment"># move all files and folders inside publish_dir (./public) to destination_dir (./),</span></span><br><span class="line">      <span class="comment"># then commit the changes.</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Deploy</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">peaceiris/actions-gh-pages@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">github_token:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.GITHUB_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">          <span class="attr">publish_dir:</span> <span class="string">./public</span> <span class="comment"># The directory where hexo output the website files</span></span><br><span class="line">          <span class="attr">destination_dir:</span> <span class="string">./</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>Add an empty file <code>.nojekyll</code> to root folder, the one contains <code>package.json</code>.</li>
+</ol>
+</li>
+</ol>
+<h2 id="Explanation"><a href="#Explanation" class="headerlink" title="Explanation"></a>Explanation</h2><ol>
+<li>The <code>.github/workflows/pages.yml</code> is a CI configuration file that tells Github CI how and when to generate and deploy the website.</li>
+<li>By default Github Pages uses another static site generator called <em>jekyll</em>. <code>.nojekyll</code> tells Github Page that we do not use <em>jekyll</em>, and let it bypass relative process. Otherwise the it will fail to generate website.</li>
+</ol>
+<h2 id="Pitfalls"><a href="#Pitfalls" class="headerlink" title="Pitfalls"></a>Pitfalls</h2><ol>
+<li><p>You should create the branch <code>gh-pages</code> yourself. Github CI will not create it for you if it found the branch is absent.</p>
+</li>
+<li><p>if you <strong>INSIST ON</strong> creating a <strong>NON-EMPTY</strong> repository on the GitHub (e.g. creates with added a <code>.gitignore</code>), The main branch’s name will be <code>main</code> other than <code>master</code>. In this case, the GitHub CI should listen <code>main</code> branch’s changes, instead of <code>master</code> branch’s. Therefore the YAML’s <code>on</code> section should become:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">main</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Role-of-Branches"><a href="#Role-of-Branches" class="headerlink" title="Role of Branches"></a>Role of Branches</h3><ol>
+<li><code>master</code>: branch stores the Hexo configuration and Markdown files</li>
+<li><code>gh-pages</code>: branch stores the website Hexo generates</li>
+</ol>
+<h3 id="What-will-Github-CI-do"><a href="#What-will-Github-CI-do" class="headerlink" title="What will Github CI do?"></a>What will Github CI do?</h3><p>When we push a new commit to <code>master</code> branch, the GitHub CI will be informed and start its jobs. They are described thoroughly below in the YAML file. In short, it will switch to <code>master</code> branch, ask Hexo to generate a new website, then switch to <code>gh-pages</code> branch, commit the new website to this branch.</p>
+<h1 id="Pitfalls-1"><a href="#Pitfalls-1" class="headerlink" title="Pitfalls"></a>Pitfalls</h1><ol>
+<li>you have to create the branch <code>gh-pages</code> first. The CI script itself won’t help you to do that.</li>
+<li>the URL should be <code>https://username.github.io</code>, rather than <code>https://username.github.io/project</code>, otherwise the public path of all CSS, JavaScript and probably image files will be <code>/project</code> instead of <code>/</code>, and you will only see the home page without any styles loaded.</li>
+</ol>
+
+    </div>
+
+</div>
+                <div class="footer">
+    <span>Copyright © 2022 StephenChips</span>
+    <span>Theme Designed By <a target="_blank" href="https://zheli.design/one-paper">這Li</a></span>
+</div>
+
+
+<link rel="stylesheet" href="/css/a11y-dark.min.css">
+
+
+<script src="/js/highlight.min.js"></script>
+
+
+<script src="/js/highlightjs-line-numbers.js"></script>
+
+
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
+
+            </div>
+        </div>
+    </body>
+</html>
