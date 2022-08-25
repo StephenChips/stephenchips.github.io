@@ -74,6 +74,72 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Hexo-pitfalls-post-asset-folder-doesn-t-work" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/" class="article-date">
+  <time class="dt-published" datetime="2022-08-25T12:00:37.832Z" itemprop="datePublished">2022-08-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/">Hexo pitfalls: `post_asset_folder` doesn&#39;t work</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="the-post-asset-folder-Option"><a href="#the-post-asset-folder-Option" class="headerlink" title="the post_asset_folder Option"></a>the <code>post_asset_folder</code> Option</h1><p>There are two way to store iamges in a Hexo blog. The simplest way is to create a <code>image</code> folder inside the <code>source</code> folder, and store all images inside this folder. Later you can reference this image using something like <code>![](images/images.png)</code>. Following is the directory structure: </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">source</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">_post</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">a-guide-to-markdown</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">images</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">markdown.png</span></span><br></pre></td></tr></table></figure>
+
+<p>Hexo also provides a more organized way to manage images and other static resources: by using a “Post Asset Folder”. It’s a folder has the same name of the post, and located in the same folder. After you set <code>post_asset_folder: true</code> in the <code>_config.yml</code>, You can put resources in this folder and reference them with <em>just it’s name</em></p>
+<p>For example, there was a post named <code>a-guide-to-markdown.md</code>, and if I want to reference a picture called <code>markdown-icon.png</code> in my post, I can create a folder that is also called <code>a-guide-to-markdown</code> which sits beside the post, and add the picture in it. The directory structure will be:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">source</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">_post</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">a-guide-to-markdown</span></span><br><span class="line">            <span class="bullet">-</span> <span class="string">markdown.png</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">a-guide-to-markdown.md</span></span><br></pre></td></tr></table></figure>
+
+<p>Then inside the post, I can simply write <code>![](markdown.png)</code>. Hexo will find the associated folder and generate a correct URL while generating website.</p>
+<h1 id="the-Problem"><a href="#the-Problem" class="headerlink" title="the Problem"></a>the Problem</h1><p>Well, it doesn’t work. If a post’s path is <code>/2022/08/20/a-guide-to-markdown/</code>, and I inserted an image in my post: <code>![](markdown-icon.png)</code>, the image’s link in the output HTML should be <code>/2022/08/20/a-guide-to-markdown/markdown-icon.png</code>, but it doesn’t. Instead, it mistakenly links the images to the root path <code>/./markdown-icon.png</code>, as if the option weren’t turned on.</p>
+<h1 id="the-Solution"><a href="#the-Solution" class="headerlink" title="the Solution"></a>the Solution</h1><p>Not only should you set the <code>post_asset_folder</code> to true, but also <code>postAsset</code> of the <code>marked</code> object.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="attr">marked:</span></span><br><span class="line">  <span class="attr">postAsset:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>The second one is a options of the Hexo plugin <code>hexo-renderer-marked</code>. The document is here: <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-renderer-marked">https://github.com/hexojs/hexo-renderer-marked</a>. IMO, this is utterly a terrible design. I see no reason why we have to set two option for one functionality. More worst, Hexo doesn’t document it at all!</p>
+<h1 id="How-I-Found-the-Solution"><a href="#How-I-Found-the-Solution" class="headerlink" title="How I Found the Solution"></a>How I Found the Solution</h1><p>I didn’t get any useful answer from the official website nor Google, so I look into the code and try debug the process of <code>hexo g</code>. After some trials I found following key code in the file <code>node_modules\hexo-renderer-marked\lib\renderer.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="keyword">function</span>(<span class="params">data, options</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; post_asset_folder, <span class="attr">marked</span>: markedCfg, source_dir &#125; = <span class="variable language_">this</span>.<span class="property">config</span>;</span><br><span class="line">  <span class="keyword">const</span> &#123; prependRoot, postAsset, dompurify &#125; = markedCfg;</span><br><span class="line">  <span class="keyword">const</span> &#123; path, text &#125; = data;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ... other codes</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> postPath = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="keyword">if</span> (path &amp;&amp; post_asset_folder &amp;&amp; prependRoot &amp;&amp; postAsset) &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="title class_">Post</span> = <span class="variable language_">this</span>.<span class="title function_">model</span>(<span class="string">&#x27;Post&#x27;</span>);</span><br><span class="line">    <span class="comment">// Windows compatibility, Post.findOne() requires forward slash</span></span><br><span class="line">    <span class="keyword">const</span> source = path.<span class="title function_">substring</span>(<span class="variable language_">this</span>.<span class="property">source_dir</span>.<span class="property">length</span>).<span class="title function_">replace</span>(<span class="regexp">/\\/g</span>, <span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">    <span class="keyword">const</span> post = <span class="title class_">Post</span>.<span class="title function_">findOne</span>(&#123; source &#125;);</span><br><span class="line">    <span class="keyword">if</span> (post) &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">source</span>: postSource &#125; = post;</span><br><span class="line">      postPath = <span class="title function_">join</span>(source_dir, <span class="title function_">dirname</span>(postSource), <span class="title function_">basename</span>(postSource, <span class="title function_">extname</span>(postSource)));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ... other codes</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This file is about transforming a Markdown post to HTML, and this part of code it is about setting the variable <code>postPost</code>, which I presume it is the base path of resources referenced in this Markdown post. By default it is empty, and probably means the root path <code>/</code>. This matches the bahaviour when <code>post-asset-folder</code> is disabled. So I guessed, if <code>post-asset-folder</code> is enabled. The condition <code>path &amp;&amp; post_asset_folder &amp;&amp; prependRoot &amp;&amp; postAsset</code> should be true, and the statements in the <em>if-block</em> should be executed and get the <code>postPath</code> rewritten. So what went wrong? I noticed that all variable is <em>truthy</em>, <strong>excepts for</strong> <code>postAsset</code>. Therefore, if I can find out where the <code>postAsset</code> is set, and why it isn’t set to be <code>true</code>, the problem will be solved.</p>
+<p>The <code>postAsset</code> initially is defined in the file <code>/node_modules/hexo-renderer-marked/index.js</code>, and it is injected when the plugin is being installed.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* global hexo */</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> renderer = <span class="built_in">require</span>(<span class="string">&#x27;./lib/renderer&#x27;</span>);</span><br><span class="line"></span><br><span class="line">hexo.<span class="property">config</span>.<span class="property">marked</span> = <span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;</span><br><span class="line">  <span class="attr">gfm</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">pedantic</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">breaks</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">smartLists</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">smartypants</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">modifyAnchors</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">autolink</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">mangle</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">sanitizeUrl</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">dompurify</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">headerIds</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">anchorAlias</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">lazyload</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">prependRoot</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">postAsset</span>: <span class="literal">false</span>, <span class="comment">// HERE!</span></span><br><span class="line">  <span class="attr">external_link</span>: &#123;</span><br><span class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">exclude</span>: [],</span><br><span class="line">    <span class="attr">nofollow</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">descriptionLists</span>: <span class="literal">true</span></span><br><span class="line">&#125;, hexo.<span class="property">config</span>.<span class="property">marked</span>);</span><br><span class="line"></span><br><span class="line">renderer.<span class="property">disableNunjucks</span> = <span class="title class_">Boolean</span>(hexo.<span class="property">config</span>.<span class="property">marked</span>.<span class="property">disableNunjucks</span>);</span><br><span class="line"></span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;md&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;markdown&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mkd&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mkdn&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mdwn&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mdtxt&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mdtext&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+
+<p>So, how can I change it? The object assign to <code>hexco.config.marked</code> looks like a configuration file for the plugin, so probably I can change it via changing Hexo’s configuration file. I visited the official website of the plugin <code>hexo-renderer-makred</code>, and in the document, I found the option’s definition:</p>
+<p><img src="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/postAsset-option.PNG" alt="the postAsset option"></p>
+<p>and it also said:</p>
+<p><img src="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/change-config.PNG"></p>
+<p>Volia, problem solved! I just enable this option in my <code>_config.yml</code>, then regenerate the webpage, and everything is done!</p>
+<h1 id="Unsolved-Problems"><a href="#Unsolved-Problems" class="headerlink" title="Unsolved Problems"></a>Unsolved Problems</h1><p>If the article is a draft instead of a post, the images still aren’t displayed.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://stephenchips.github.io/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/" data-id="cl78zu4rm0002atndebk52umf" data-title="Hexo pitfalls: `post_asset_folder` doesn&#39;t work" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Pitfalls/" rel="tag">Pitfalls</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" class="article-date">
@@ -155,7 +221,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" data-id="cl78xmszn0002agol9bdlh1iw" data-title="Creating a Hexo Blog on your Github Pages: Steps and Pitfalls" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" data-id="cl78zu4ri0001atndh5aq6379" data-title="Creating a Hexo Blog on your Github Pages: Steps and Pitfalls" class="article-share-link">Share</a>
       
       
       
@@ -199,7 +265,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/20/Why-I-started-this-blog/" data-id="cl78xmszq0004agol7due8zq3" data-title="Why I started this blog" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/08/20/Why-I-started-this-blog/" data-id="cl78zu4rq0004atndc35x0vey" data-title="Why I started this blog" class="article-share-link">Share</a>
       
       
       
@@ -236,7 +302,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/General/" style="font-size: 10px;">General</a> <a href="/tags/Pitfalls/" style="font-size: 10px;">Pitfalls</a> <a href="/tags/Tutorials/" style="font-size: 10px;">Tutorials</a>
+      <a href="/tags/General/" style="font-size: 10px;">General</a> <a href="/tags/Pitfalls/" style="font-size: 20px;">Pitfalls</a> <a href="/tags/Tutorials/" style="font-size: 10px;">Tutorials</a>
     </div>
   </div>
 
@@ -256,6 +322,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/">Hexo pitfalls: `post_asset_folder` doesn&#39;t work</a>
+          </li>
         
           <li>
             <a href="/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/">Creating a Hexo Blog on your Github Pages: Steps and Pitfalls</a>
