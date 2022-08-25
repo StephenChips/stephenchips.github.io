@@ -16,7 +16,7 @@
 <meta property="og:image" content="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/empty-repo.png">
 <meta property="og:image" content="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/set-branch.PNG">
 <meta property="article:published_time" content="2022-08-20T15:51:37.000Z">
-<meta property="article:modified_time" content="2022-08-25T12:00:37.832Z">
+<meta property="article:modified_time" content="2022-08-25T12:19:24.340Z">
 <meta property="article:author" content="Stephen Chips">
 <meta property="article:tag" content="Pitfalls">
 <meta property="article:tag" content="Tutorials">
@@ -147,7 +147,7 @@
 <h2 id="Pitfalls"><a href="#Pitfalls" class="headerlink" title="Pitfalls"></a>Pitfalls</h2><ol>
 <li><p>You should create the branch <code>gh-pages</code> yourself. Github CI will not create it for you if it found the branch is absent.</p>
 </li>
-<li><p>if you <strong>INSIST ON</strong> creating a <strong>NON-EMPTY</strong> repository on the GitHub (e.g. creates with added a <code>.gitignore</code>), The main branch’s name will be <code>main</code> other than <code>master</code>. In this case, the GitHub CI should listen <code>main</code> branch’s changes, instead of <code>master</code> branch’s. Therefore the YAML’s <code>on</code> section should become:</p>
+<li><p>if you <strong>INSIST ON</strong> creating a <strong>NON-EMPTY</strong> repository on the GitHub (e.g. creates with a <code>.gitignore</code>), The main branch’s name will be <code>main</code> other than <code>master</code>. In this case, the GitHub CI should listen <code>main</code> branch’s changes, instead of <code>master</code> branch’s. Therefore the YAML’s <code>on</code> section should become:</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">on:</span></span><br><span class="line">  <span class="attr">push:</span></span><br><span class="line">    <span class="attr">branches:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">main</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="Role-of-Branches"><a href="#Role-of-Branches" class="headerlink" title="Role of Branches"></a>Role of Branches</h3><ol>
@@ -159,7 +159,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" data-id="cl78zu4ri0001atndh5aq6379" data-title="Creating a Hexo Blog on your Github Pages: Steps and Pitfalls" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" data-id="cl790i97b0001a5os3ayq9q01" data-title="Creating a Hexo Blog on your Github Pages: Steps and Pitfalls" class="article-share-link">Share</a>
       
       
       
