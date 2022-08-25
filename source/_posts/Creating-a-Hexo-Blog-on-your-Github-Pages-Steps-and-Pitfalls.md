@@ -1,6 +1,8 @@
 ---
 title: 'Creating a Hexo Blog on your Github Pages: Steps and Pitfalls'
-tags: pitfalls, tutorials
+tags: 
+  - Pitfalls
+  - Tutorials
 date: 2022-08-20 23:51:37
 ---
 
@@ -25,17 +27,14 @@ When installatiom is completed, you can type `hexo generate` to start a local se
 
 ## Configuration
 
-The configuration here is about the infomation of the site itself. Many of them are quite straightforward, e.g. `title` is the name of your blog, which will probably be displayed at the home page. You can look up there definition on this [webpage](https://hexo.io/docs/configuration.html). Through, one option is worth to mention: `url`.
+*Hexo*'s configuration file is `_config.yml`, which is placed at the project's root directory. It specified information and settings of the blog, e.g. `title` for the name of your blog, which is displayed at the home page. You can look up there definition on this [webpage](https://hexo.io/docs/configuration.html). Through many of them are straightforward, one option is worth to mention: `url`.
 
-Why there is such a option? Is it necessary? Well, yes, it defines the public root of the generated website, usually it can be just your domain address, e.g. `https://stephenchips.github.io`, or more complicated, the domain address and a base directory, e.g. `https://stephenchips.github.io/blog`. This configuration become necessary when you want to host not just your blog, but your other applications on your GitHub Page. for example:
+This defines the public root of your blog.
 
-```
-https://stephenchips.github.io/awesome-online-application
-https://stephenchips.github.io/blo
-```
+1. Fill it with Github Page's address, e.g. `https://stephenchips.github.io`, if the blog is the only application hosted on your Github Page.
+2. If you want to host your blog under a public path, fill it with Github Page's address, along with the public path. e.g. `https://stephenchips.github.io/blog`.
 
-Every assets and HTML files is a subdirectory of `/blog`, e.g. the home page will be `https://stephenchips.github.io/blog/index.html`. Everything is complete isolated from the other application, stay inside its "namespace". Unfortunately, this is determined by the GitHub Page's setting, or the reverse proxy rules if you hosted Hexo on your own machine, so we need to provide this information to Hexo
-so that it can get the correct URLs in the output HTML, JavaScript, CSS and image files.
+The reason why Hexo needs it is because Hexo doesn't know that which public path will the website be deployed at when generating the website, and it needs this information to correctly transform links of resources referenced by Markdown posts from its local address to the public address (e.g. Images, JavaScript, CSS). If the `URL` isn't correct, resources won't be loaded successfully, `404 Not Found` errors will be thrown.
 
 # Create Your Github Page Repository
 
@@ -165,10 +164,5 @@ The website Hexo generates has a fixed content, that's why it's called "static s
 
 ### What will Github CI do?
 
-When we push a new commit to `master` branch, the GitHub CI will be informed and start its jobs. They are described thoroughly below in the YAML file. In short, it will switch to `master` branch, ask Hexo to generate a new website, then switch to `gh-pages` branch, commit the new website to this branch.
-
-# Pitfalls
-
-1. you have to create the branch `gh-pages` first. The CI script itself won't help you to do that.
-2. the URL should be `https://username.github.io`, rather than `https://username.github.io/project`, otherwise the public path of all CSS, JavaScript and probably image files will be `/project` instead of `/`, and you will only see the home page without any styles loaded.
+It will switch to `master` branch, ask Hexo to generate a new website, then switch to `gh-pages` branch, commit the new website to this branch, when we have pushed a new commit to `master` branch. How these jobs are done is described in the `.github/workflows/pages.yml` in detail.
 
