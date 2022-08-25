@@ -148,7 +148,7 @@ The website Hexo generates has a fixed content, that's why it's called "static s
 ## Pitfalls
 
 1. You should create the branch `gh-pages` yourself. Github CI will not create it for you if it found the branch is absent.
-2. if you **INSIST ON** creating a **NON-EMPTY** repository on the GitHub (e.g. creates with added a `.gitignore`), The main branch's name will be `main` other than `master`. In this case, the GitHub CI should listen `main` branch's changes, instead of `master` branch's. Therefore the YAML's `on` section should become:
+2. if you **INSIST ON** creating a **NON-EMPTY** repository on the GitHub (e.g. creates with a `.gitignore`), The main branch's name will be `main` other than `master`. In this case, the GitHub CI should listen `main` branch's changes, instead of `master` branch's. Therefore the YAML's `on` section should become:
    
    ```yaml
    on:
