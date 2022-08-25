@@ -100,11 +100,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Install the command line tool</span></span><br><span class="line">npm install hexo-cli -g</span><br><span class="line"></span><br><span class="line"><span class="comment"># Use the command line tool to create a new blog inside a folder (created automatically).</span></span><br><span class="line">hexo init hexo-blog</span><br><span class="line"></span><br><span class="line"><span class="comment"># The blog is just a Node.js project, so you have to install packages before using.</span></span><br><span class="line"><span class="built_in">cd</span> hexo-blog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
 
 <p>When installatiom is completed, you can type <code>hexo generate</code> to start a local server, then you can visit <code>https://127.0.0.1:4000</code> to preview your blog locally.</p>
-<h2 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h2><p>The configuration here is about the infomation of the site itself. Many of them are quite straightforward, e.g. <code>title</code> is the name of your blog, which will probably be displayed at the home page. You can look up there definition on this <a target="_blank" rel="noopener" href="https://hexo.io/docs/configuration.html">webpage</a>. Through, one option is worth to mention: <code>url</code>.</p>
-<p>Why there is such a option? Is it necessary? Well, yes, it defines the public root of the generated website, usually it can be just your domain address, e.g. <code>https://stephenchips.github.io</code>, or more complicated, the domain address and a base directory, e.g. <code>https://stephenchips.github.io/blog</code>. This configuration become necessary when you want to host not just your blog, but your other applications on your GitHub Page. for example:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://stephenchips.github.io/awesome-online-application</span><br><span class="line">https://stephenchips.github.io/blo</span><br></pre></td></tr></table></figure>
-
-<p>Every assets and HTML files is a subdirectory of <code>/blog</code>, e.g. the home page will be <code>https://stephenchips.github.io/blog/index.html</code>. Everything is complete isolated from the other application, stay inside its “namespace”. Unfortunately, this is determined by the GitHub Page’s setting, or the reverse proxy rules if you hosted Hexo on your own machine, so we need to provide this information to Hexo<br>so that it can get the correct URLs in the output HTML, JavaScript, CSS and image files.</p>
+<h2 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h2><p><em>Hexo</em>‘s configuration file is <code>_config.yml</code>, which is placed at the project’s root directory. It specified information and settings of the blog, e.g. <code>title</code> for the name of your blog, which is displayed at the home page. You can look up there definition on this <a target="_blank" rel="noopener" href="https://hexo.io/docs/configuration.html">webpage</a>. Through many of them are straightforward, one option is worth to mention: <code>url</code>.</p>
+<p>This defines the public root of your blog.</p>
+<ol>
+<li>Fill it with Github Page’s address, e.g. <code>https://stephenchips.github.io</code>, if the blog is the only application hosted on your Github Page.</li>
+<li>If you want to host your blog under a public path, fill it with Github Page’s address, along with the public path. e.g. <code>https://stephenchips.github.io/blog</code>.</li>
+</ol>
+<p>The reason why Hexo needs it is because Hexo doesn’t know that which public path will the website be deployed at when generating the website, and it needs this information to correctly transform links of resources referenced by Markdown posts from its local address to the public address (e.g. Images, JavaScript, CSS). If the <code>URL</code> isn’t correct, resources won’t be loaded successfully, <code>404 Not Found</code> errors will be thrown.</p>
 <h1 id="Create-Your-Github-Page-Repository"><a href="#Create-Your-Github-Page-Repository" class="headerlink" title="Create Your Github Page Repository"></a>Create Your Github Page Repository</h1><p>The steps is same as creating a normal repository, except the name is fixed:</p>
 <ol>
 <li><code>git init</code> to create a new repository on your computer.</li>
@@ -148,20 +150,16 @@
 <li><code>master</code>: branch stores the Hexo configuration and Markdown files</li>
 <li><code>gh-pages</code>: branch stores the website Hexo generates</li>
 </ol>
-<h3 id="What-will-Github-CI-do"><a href="#What-will-Github-CI-do" class="headerlink" title="What will Github CI do?"></a>What will Github CI do?</h3><p>When we push a new commit to <code>master</code> branch, the GitHub CI will be informed and start its jobs. They are described thoroughly below in the YAML file. In short, it will switch to <code>master</code> branch, ask Hexo to generate a new website, then switch to <code>gh-pages</code> branch, commit the new website to this branch.</p>
-<h1 id="Pitfalls-1"><a href="#Pitfalls-1" class="headerlink" title="Pitfalls"></a>Pitfalls</h1><ol>
-<li>you have to create the branch <code>gh-pages</code> first. The CI script itself won’t help you to do that.</li>
-<li>the URL should be <code>https://username.github.io</code>, rather than <code>https://username.github.io/project</code>, otherwise the public path of all CSS, JavaScript and probably image files will be <code>/project</code> instead of <code>/</code>, and you will only see the home page without any styles loaded.</li>
-</ol>
+<h3 id="What-will-Github-CI-do"><a href="#What-will-Github-CI-do" class="headerlink" title="What will Github CI do?"></a>What will Github CI do?</h3><p>It will switch to <code>master</code> branch, ask Hexo to generate a new website, then switch to <code>gh-pages</code> branch, commit the new website to this branch, when we have pushed a new commit to <code>master</code> branch. How these jobs are done is described in the <code>.github/workflows/pages.yml</code> in detail.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" data-id="cl76e11i00002pwpv53gnh1xn" data-title="Creating a Hexo Blog on your Github Pages: Steps and Pitfalls" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" data-id="cl78xmszn0002agol9bdlh1iw" data-title="Creating a Hexo Blog on your Github Pages: Steps and Pitfalls" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pitfalls-tutorials/" rel="tag">pitfalls, tutorials</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Pitfalls/" rel="tag">Pitfalls</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tutorials/" rel="tag">Tutorials</a></li></ul>
 
     </footer>
   </div>
@@ -201,7 +199,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/20/Why-I-started-this-blog/" data-id="cl76e11hy0001pwpv1pwb5qyn" data-title="Why I started this blog" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/08/20/Why-I-started-this-blog/" data-id="cl78xmszq0004agol7due8zq3" data-title="Why I started this blog" class="article-share-link">Share</a>
       
       
       
@@ -228,7 +226,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/General/" rel="tag">General</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pitfalls-tutorials/" rel="tag">pitfalls, tutorials</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/General/" rel="tag">General</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pitfalls/" rel="tag">Pitfalls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tutorials/" rel="tag">Tutorials</a></li></ul>
     </div>
   </div>
 
@@ -238,7 +236,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/General/" style="font-size: 10px;">General</a> <a href="/tags/pitfalls-tutorials/" style="font-size: 10px;">pitfalls, tutorials</a>
+      <a href="/tags/General/" style="font-size: 10px;">General</a> <a href="/tags/Pitfalls/" style="font-size: 10px;">Pitfalls</a> <a href="/tags/Tutorials/" style="font-size: 10px;">Tutorials</a>
     </div>
   </div>
 
