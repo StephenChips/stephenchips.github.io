@@ -35,7 +35,7 @@
 <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
   
-<meta name="generator" content="Hexo 5.4.2"></head>
+<meta name="generator" content="Hexo 6.2.0"></head>
 
 <body>
   <div id="container">
@@ -76,8 +76,8 @@
   
     <article id="post-Hexo-pitfalls-post-asset-folder-doesn-t-work" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/" class="article-date">
-  <time class="dt-published" datetime="2022-08-25T12:19:24.340Z" itemprop="datePublished">2022-08-25</time>
+    <a href="/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/" class="article-date">
+  <time class="dt-published" datetime="2022-08-27T09:58:18.480Z" itemprop="datePublished">2022-08-27</time>
 </a>
     
   </div>
@@ -88,7 +88,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/">Hexo pitfalls: `post_asset_folder` doesn&#39;t work</a>
+      <a class="p-name article-title" href="/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/">Hexo pitfalls: `post_asset_folder` doesn&#39;t work</a>
     </h1>
   
 
@@ -117,16 +117,16 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* global hexo */</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> renderer = <span class="built_in">require</span>(<span class="string">&#x27;./lib/renderer&#x27;</span>);</span><br><span class="line"></span><br><span class="line">hexo.<span class="property">config</span>.<span class="property">marked</span> = <span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;</span><br><span class="line">  <span class="attr">gfm</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">pedantic</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">breaks</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">smartLists</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">smartypants</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">modifyAnchors</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">autolink</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">mangle</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">sanitizeUrl</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">dompurify</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">headerIds</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">anchorAlias</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">lazyload</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">prependRoot</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">postAsset</span>: <span class="literal">false</span>, <span class="comment">// HERE!</span></span><br><span class="line">  <span class="attr">external_link</span>: &#123;</span><br><span class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">exclude</span>: [],</span><br><span class="line">    <span class="attr">nofollow</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">descriptionLists</span>: <span class="literal">true</span></span><br><span class="line">&#125;, hexo.<span class="property">config</span>.<span class="property">marked</span>);</span><br><span class="line"></span><br><span class="line">renderer.<span class="property">disableNunjucks</span> = <span class="title class_">Boolean</span>(hexo.<span class="property">config</span>.<span class="property">marked</span>.<span class="property">disableNunjucks</span>);</span><br><span class="line"></span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;md&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;markdown&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mkd&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mkdn&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mdwn&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mdtxt&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mdtext&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
 
 <p>So, how can I change it? The object assign to <code>hexco.config.marked</code> looks like a configuration file for the plugin, so probably I can change it via changing Hexo’s configuration file. I visited the official website of the plugin <code>hexo-renderer-makred</code>, and in the document, I found the option’s definition:</p>
-<p><img src="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/postAsset-option.PNG" alt="the postAsset option"></p>
+<p><img src="/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/postAsset-option.PNG" alt="the postAsset option"></p>
 <p>and it also said:</p>
-<p><img src="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/change-config.PNG"></p>
+<p><img src="/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/change-config.PNG"></p>
 <p>Volia, problem solved! I just enable this option in my <code>_config.yml</code>, then regenerate the webpage, and everything is done!</p>
 <h1 id="Unsolved-Problems"><a href="#Unsolved-Problems" class="headerlink" title="Unsolved Problems"></a>Unsolved Problems</h1><p>If the article is a draft instead of a post, the images still aren’t displayed.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/" data-id="cl790i97e0002a5osg616bpzr" data-title="Hexo pitfalls: `post_asset_folder` doesn&#39;t work" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/" data-id="cl7bqcgog0002buou2of140pn" data-title="Hexo pitfalls: `post_asset_folder` doesn&#39;t work" class="article-share-link">Share</a>
       
       
       
@@ -221,7 +221,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" data-id="cl790i97b0001a5os3ayq9q01" data-title="Creating a Hexo Blog on your Github Pages: Steps and Pitfalls" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" data-id="cl7bqcgod0001buou0vli33m6" data-title="Creating a Hexo Blog on your Github Pages: Steps and Pitfalls" class="article-share-link">Share</a>
       
       
       
@@ -265,7 +265,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/20/Why-I-started-this-blog/" data-id="cl790i97l0004a5os4e7g87h2" data-title="Why I started this blog" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/08/20/Why-I-started-this-blog/" data-id="cl7bqcgok0004buougs9b6020" data-title="Why I started this blog" class="article-share-link">Share</a>
       
       
       
@@ -324,7 +324,7 @@
       <ul>
         
           <li>
-            <a href="/2022/08/25/Hexo-pitfalls-post-asset-folder-doesn-t-work/">Hexo pitfalls: `post_asset_folder` doesn&#39;t work</a>
+            <a href="/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/">Hexo pitfalls: `post_asset_folder` doesn&#39;t work</a>
           </li>
         
           <li>
