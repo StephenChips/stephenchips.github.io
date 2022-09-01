@@ -1,6 +1,7 @@
 ---
 title: 'Hexo pitfalls: `post_asset_folder` doesn''t work'
 tags: Pitfalls
+date: 2022-08-25 20:00:13
 ---
 
 # the `post_asset_folder` Option
