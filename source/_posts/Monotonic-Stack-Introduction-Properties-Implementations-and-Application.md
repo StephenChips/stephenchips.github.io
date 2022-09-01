@@ -1,8 +1,10 @@
 ---
 title: 'Monotonic Stack: Introduction, Properties, Implementations and Applications'
 date: 2022-09-01 11:12:14
-tags:
+tags: algorithms
 ---
+
+(WIP)
 
 # Introduction
 
@@ -28,6 +30,12 @@ For pushing, we have to repeatly pop the item from the stack first, until stack'
 
 (Examples on popping and pushing items)
 
+# Implementations
+
+## from the begin to the end
+
+## from the end to the begin
+
 # Properties
 
 A common use case of the monotonic stack is to solve the *cloest smaller value problem*, and its variants. This takes advancetage of some properties of a monotonic stack.
@@ -39,7 +47,7 @@ A common use case of the monotonic stack is to solve the *cloest smaller value p
 > 
 > If we solve this problem with the brute-force method, the time complexity will usually be `O(N^2)`, since for each item we have to iterate through the array once. But with the help of monotonic stack, the complexity can be decreased, usually become `O(N)`.
 
-
-
-
 ## Proof
+
+# Applications
+
