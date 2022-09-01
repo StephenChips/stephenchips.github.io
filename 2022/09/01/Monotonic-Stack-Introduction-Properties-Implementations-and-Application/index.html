@@ -6,17 +6,17 @@
   
   <title>Monotonic Stack: Introduction, Properties, Implementations and Applications | StephenChips</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="IntroductionDefinitionA monotonic stack is fairly a simple data structure per se. It’s a stack with an additional rule: items in the stack have to be ordered monotonically. That is, be arranged in an">
+  <meta name="description" content="(WIP) IntroductionDefinitionA monotonic stack is fairly a simple data structure per se. It’s a stack with an additional rule: items in the stack have to be ordered monotonically. That is, be arranged">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Monotonic Stack: Introduction, Properties, Implementations and Applications">
 <meta property="og:url" content="https://stephenchips.github.io/2022/09/01/Monotonic-Stack-Introduction-Properties-Implementations-and-Application/index.html">
 <meta property="og:site_name" content="StephenChips">
-<meta property="og:description" content="IntroductionDefinitionA monotonic stack is fairly a simple data structure per se. It’s a stack with an additional rule: items in the stack have to be ordered monotonically. That is, be arranged in an">
+<meta property="og:description" content="(WIP) IntroductionDefinitionA monotonic stack is fairly a simple data structure per se. It’s a stack with an additional rule: items in the stack have to be ordered monotonically. That is, be arranged">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-01T03:12:14.000Z">
-<meta property="article:modified_time" content="2022-09-01T04:52:33.814Z">
+<meta property="article:modified_time" content="2022-09-01T04:55:54.164Z">
 <meta property="article:author" content="Stephen Chips">
-<meta property="article:tag" content="front end, 前端">
+<meta property="article:tag" content="algorithms">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="StephenChips" type="application/atom+xml">
@@ -96,7 +96,8 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>A monotonic stack is fairly a simple data structure per se. It’s a stack with an additional rule: items in the stack have to be ordered monotonically. That is, be arranged in an increasing or decreasing order from bottom to top. If the items are in a increasing order, the stack will be a monotonically increasing stack, otherwise, it will be a monotonically decreasing stack. Here is some examples:</p>
+        <p>(WIP)</p>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>A monotonic stack is fairly a simple data structure per se. It’s a stack with an additional rule: items in the stack have to be ordered monotonically. That is, be arranged in an increasing or decreasing order from bottom to top. If the items are in a increasing order, the stack will be a monotonically increasing stack, otherwise, it will be a monotonically decreasing stack. Here is some examples:</p>
 <p>(An example of monotonically increasing stack)</p>
 <p>(An example of monotonically decreasing stack)</p>
 <p>This isn’t a monotonic stack because one of the items breaks the rule: it’s smaller than the items that is stacked below it.</p>
@@ -105,20 +106,22 @@
 <p>For popping it acts as same as a normal stack, since it won’t breaks breaks the monotonicity.</p>
 <p>For pushing, we have to repeatly pop the item from the stack first, until stack’s top item is smaller than (or equal to) the item being pushed onto. Of course, if initially the stack’s top item has already met the condition, or all items have been popped out, you may directly push the item onto the stack.</p>
 <p>(Examples on popping and pushing items)</p>
-<h1 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h1><p>A common use case of the monotonic stack is to solve the <em>cloest smaller value problem</em>, and its variants. This takes advancetage of some properties of a monotonic stack.</p>
+<h1 id="Implementations"><a href="#Implementations" class="headerlink" title="Implementations"></a>Implementations</h1><h2 id="from-the-begin-to-the-end"><a href="#from-the-begin-to-the-end" class="headerlink" title="from the begin to the end"></a>from the begin to the end</h2><h2 id="from-the-end-to-the-begin"><a href="#from-the-end-to-the-begin" class="headerlink" title="from the end to the begin"></a>from the end to the begin</h2><h1 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h1><p>A common use case of the monotonic stack is to solve the <em>cloest smaller value problem</em>, and its variants. This takes advancetage of some properties of a monotonic stack.</p>
 <blockquote>
 <p><strong>The nearest smaller value problem</strong><br>Given an array of values <code>arr</code>, and an index <code>i</code>, find the value that is smaller than <code>arr[i]</code>, and it’s cloest to <code>arr[i]</code>, i.e., their distances (<code>abs(j - i)</code>) is the smallest among all items that are smaller than <code>arr[i]</code>.</p>
 <p>For example: let <code>arr</code> to be <code>[3,1,6,8,2,7]</code>. Which values in the array are smaller than <code>arr[2] == 6</code>? Obviously they are <code>arr[0] == 3</code>, <code>arr[1] === 1</code> and <code>arr[4] === 2</code>. Which one is closest to <code>arr[2]</code>? That is <code>arr[1]</code>, which is right on its left.</p>
 <p>If we solve this problem with the brute-force method, the time complexity will usually be <code>O(N^2)</code>, since for each item we have to iterate through the array once. But with the help of monotonic stack, the complexity can be decreased, usually become <code>O(N)</code>.</p>
 </blockquote>
-<h2 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h2>
+<h2 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h2><h1 id="Applications"><a href="#Applications" class="headerlink" title="Applications"></a>Applications</h1>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/09/01/Monotonic-Stack-Introduction-Properties-Implementations-and-Application/" data-id="cl7ikmjek0004b7or6elncxgz" data-title="Monotonic Stack: Introduction, Properties, Implementations and Applications" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/09/01/Monotonic-Stack-Introduction-Properties-Implementations-and-Application/" data-id="cl7ikquex0004ajogfvd2dday" data-title="Monotonic Stack: Introduction, Properties, Implementations and Applications" class="article-share-link">Share</a>
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithms/" rel="tag">algorithms</a></li></ul>
+
     </footer>
   </div>
   
@@ -157,7 +160,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/General/" rel="tag">General</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pitfalls/" rel="tag">Pitfalls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tutorials/" rel="tag">Tutorials</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/General/" rel="tag">General</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pitfalls/" rel="tag">Pitfalls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tutorials/" rel="tag">Tutorials</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithms/" rel="tag">algorithms</a></li></ul>
     </div>
   </div>
 
@@ -167,7 +170,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/General/" style="font-size: 10px;">General</a> <a href="/tags/Pitfalls/" style="font-size: 20px;">Pitfalls</a> <a href="/tags/Tutorials/" style="font-size: 10px;">Tutorials</a>
+      <a href="/tags/General/" style="font-size: 10px;">General</a> <a href="/tags/Pitfalls/" style="font-size: 20px;">Pitfalls</a> <a href="/tags/Tutorials/" style="font-size: 10px;">Tutorials</a> <a href="/tags/algorithms/" style="font-size: 10px;">algorithms</a>
     </div>
   </div>
 
