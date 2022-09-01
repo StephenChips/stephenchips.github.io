@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   
   
-  <title>Why I started this blog | StephenChips</title>
+  <title>Monotonic Stack: Introduction, Properties, Implementations and Applications | StephenChips</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="I compared VuePress and Hexo before get started, as I have around 3 years of experiences on Vue.js, getting familiar with VuePress won’t be very hard. Plus, I might take advantage of Vue.js, make a th">
+  <meta name="description" content="IntroductionDefinitionA monotonic stack is fairly a simple data structure per se. It’s a stack with an additional rule: items in the stack have to be ordered monotonically. That is, be arranged in an">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Why I started this blog">
-<meta property="og:url" content="https://stephenchips.github.io/2022/08/20/Why-I-started-this-blog/index.html">
+<meta property="og:title" content="Monotonic Stack: Introduction, Properties, Implementations and Applications">
+<meta property="og:url" content="https://stephenchips.github.io/2022/09/01/Monotonic-Stack-Introduction-Properties-Implementations-and-Application/index.html">
 <meta property="og:site_name" content="StephenChips">
-<meta property="og:description" content="I compared VuePress and Hexo before get started, as I have around 3 years of experiences on Vue.js, getting familiar with VuePress won’t be very hard. Plus, I might take advantage of Vue.js, make a th">
+<meta property="og:description" content="IntroductionDefinitionA monotonic stack is fairly a simple data structure per se. It’s a stack with an additional rule: items in the stack have to be ordered monotonically. That is, be arranged in an">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-08-20T04:45:58.000Z">
+<meta property="article:published_time" content="2022-09-01T03:12:14.000Z">
 <meta property="article:modified_time" content="2022-09-01T04:52:33.814Z">
 <meta property="article:author" content="Stephen Chips">
-<meta property="article:tag" content="General">
+<meta property="article:tag" content="front end, 前端">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="StephenChips" type="application/atom+xml">
@@ -74,10 +74,10 @@
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-Why-I-started-this-blog" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-Monotonic-Stack-Introduction-Properties-Implementations-and-Application" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/08/20/Why-I-started-this-blog/" class="article-date">
-  <time class="dt-published" datetime="2022-08-20T04:45:58.000Z" itemprop="datePublished">2022-08-20</time>
+    <a href="/2022/09/01/Monotonic-Stack-Introduction-Properties-Implementations-and-Application/" class="article-date">
+  <time class="dt-published" datetime="2022-09-01T03:12:14.000Z" itemprop="datePublished">2022-09-01</time>
 </a>
     
   </div>
@@ -88,7 +88,7 @@
         
   
     <h1 class="p-name article-title" itemprop="headline name">
-      Why I started this blog
+      Monotonic Stack: Introduction, Properties, Implementations and Applications
     </h1>
   
 
@@ -96,35 +96,49 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>I compared <em>VuePress</em> and <em>Hexo</em> before get started, as I have around 3 years of experiences on Vue.js, getting familiar with <em>VuePress</em> won’t be very hard. Plus, I might take advantage of <em>Vue.js</em>, make a theme with Vue.js components, enhance the blog’s functionality. But after some researches, I notices that <em>VuePress</em> doesn’t have an official website of themes, while <em>Hexo</em> has: <a target="_blank" rel="noopener" href="https://hexo.io/themes">https://hexo.io/themes</a>. That means I have to search around GitHubs and NPM packages for suitable themes, and try each of them out. This definitely takes more efforts than just go to the official website and pick one. One the other hand, I should focus on writing things rather than building the blog itself. Base on above reasons, I choosed <em>Hexo</em> instead of <em>VuePress</em> at last.</p>
-<p>I’ve already have a <em>Wordpress</em> blog hosted on a rented VPS. I even bought a domain for it. But after few months of experience I found that it isn’t very suitable to be a programmer’s technical blog. It has very poor support for code highlighting (both inline and block codes). Its highlighting plugin provides only few colour themes, and none of them fit well with the blog’s theme, and the worst is that it cannot display the highlighted codes and do the auto-indent while editing.</p>
-<p>That is the reason why I finally in favour of Hexo. It uses MarkDown, which can display code snippets very well. There are couples of great MarkDown editor I know, e.g. Typora, MarkText, VSCode, which all provides well real-time preview, which garentee I can write article easily.</p>
-<p>Of course there is one major drawback of Hexo, as so do other static website generators -  they don’t have a backend server. Without a backend server I cannot host demos that require a database or a Node.js server, neither can I proxy external resources with a reverse proxy like Nginx. But hay, it is just overthinking for now, since currently what I need is a place to write things (as a front-end developer).</p>
-
+        <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><p>A monotonic stack is fairly a simple data structure per se. It’s a stack with an additional rule: items in the stack have to be ordered monotonically. That is, be arranged in an increasing or decreasing order from bottom to top. If the items are in a increasing order, the stack will be a monotonically increasing stack, otherwise, it will be a monotonically decreasing stack. Here is some examples:</p>
+<p>(An example of monotonically increasing stack)</p>
+<p>(An example of monotonically decreasing stack)</p>
+<p>This isn’t a monotonic stack because one of the items breaks the rule: it’s smaller than the items that is stacked below it.</p>
+<p>(An invalid example of monotonic stack)</p>
+<h2 id="Operation"><a href="#Operation" class="headerlink" title="Operation"></a>Operation</h2><p>Since it is a stack, it has same operation as a normal stack: <code>push(value)</code> and <code>pop()</code>, but in order to maintain the monotonicity, we restrict on how they are used:</p>
+<p>For popping it acts as same as a normal stack, since it won’t breaks breaks the monotonicity.</p>
+<p>For pushing, we have to repeatly pop the item from the stack first, until stack’s top item is smaller than (or equal to) the item being pushed onto. Of course, if initially the stack’s top item has already met the condition, or all items have been popped out, you may directly push the item onto the stack.</p>
+<p>(Examples on popping and pushing items)</p>
+<h1 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h1><p>A common use case of the monotonic stack is to solve the <em>cloest smaller value problem</em>, and its variants. This takes advancetage of some properties of a monotonic stack.</p>
+<blockquote>
+<p><strong>The nearest smaller value problem</strong><br>Given an array of values <code>arr</code>, and an index <code>i</code>, find the value that is smaller than <code>arr[i]</code>, and it’s cloest to <code>arr[i]</code>, i.e., their distances (<code>abs(j - i)</code>) is the smallest among all items that are smaller than <code>arr[i]</code>.</p>
+<p>For example: let <code>arr</code> to be <code>[3,1,6,8,2,7]</code>. Which values in the array are smaller than <code>arr[2] == 6</code>? Obviously they are <code>arr[0] == 3</code>, <code>arr[1] === 1</code> and <code>arr[4] === 2</code>. Which one is closest to <code>arr[2]</code>? That is <code>arr[1]</code>, which is right on its left.</p>
+<p>If we solve this problem with the brute-force method, the time complexity will usually be <code>O(N^2)</code>, since for each item we have to iterate through the array once. But with the help of monotonic stack, the complexity can be decreased, usually become <code>O(N)</code>.</p>
+</blockquote>
+<h2 id="Proof"><a href="#Proof" class="headerlink" title="Proof"></a>Proof</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/20/Why-I-started-this-blog/" data-id="cl7ikmjem0005b7or1g2qaqtk" data-title="Why I started this blog" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/09/01/Monotonic-Stack-Introduction-Properties-Implementations-and-Application/" data-id="cl7ikmjek0004b7or6elncxgz" data-title="Monotonic Stack: Introduction, Properties, Implementations and Applications" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/General/" rel="tag">General</a></li></ul>
-
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Creating a Hexo Blog on your Github Pages: Steps and Pitfalls
+          Hexo pitfalls: `post_asset_folder` doesn&#39;t work
         
       </div>
     </a>
   
+  
+    <a href="/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Creating a Hexo Blog on your Github Pages: Steps and Pitfalls</div>
+    </a>
   
 </nav>
 

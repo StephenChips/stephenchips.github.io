@@ -9,18 +9,18 @@
   <meta name="description" content="the post_asset_folder OptionThere are two way to store iamges in a Hexo blog. The simplest way is to create a image folder inside the source folder, and store all images inside this folder. Later you">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo pitfalls: &#96;post_asset_folder&#96; doesn&#39;t work">
-<meta property="og:url" content="https://stephenchips.github.io/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/index.html">
+<meta property="og:url" content="https://stephenchips.github.io/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/index.html">
 <meta property="og:site_name" content="StephenChips">
 <meta property="og:description" content="the post_asset_folder OptionThere are two way to store iamges in a Hexo blog. The simplest way is to create a image folder inside the source folder, and store all images inside this folder. Later you">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://stephenchips.github.io/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/postAsset-option.PNG">
-<meta property="og:image" content="https://stephenchips.github.io/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/change-config.PNG">
-<meta property="article:published_time" content="2022-08-27T09:58:18.480Z">
-<meta property="article:modified_time" content="2022-08-27T09:58:18.480Z">
+<meta property="og:image" content="https://stephenchips.github.io/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/postAsset-option.PNG">
+<meta property="og:image" content="https://stephenchips.github.io/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/change-config.PNG">
+<meta property="article:published_time" content="2022-09-01T04:52:33.814Z">
+<meta property="article:modified_time" content="2022-09-01T04:52:33.814Z">
 <meta property="article:author" content="Stephen Chips">
 <meta property="article:tag" content="Pitfalls">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://stephenchips.github.io/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/postAsset-option.PNG">
+<meta name="twitter:image" content="https://stephenchips.github.io/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/postAsset-option.PNG">
   
     <link rel="alternate" href="/atom.xml" title="StephenChips" type="application/atom+xml">
   
@@ -79,8 +79,8 @@
       <div class="outer">
         <section id="main"><article id="post-Hexo-pitfalls-post-asset-folder-doesn-t-work" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/" class="article-date">
-  <time class="dt-published" datetime="2022-08-27T09:58:18.480Z" itemprop="datePublished">2022-08-27</time>
+    <a href="/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/" class="article-date">
+  <time class="dt-published" datetime="2022-09-01T04:52:33.814Z" itemprop="datePublished">2022-09-01</time>
 </a>
     
   </div>
@@ -120,16 +120,16 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* global hexo */</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> renderer = <span class="built_in">require</span>(<span class="string">&#x27;./lib/renderer&#x27;</span>);</span><br><span class="line"></span><br><span class="line">hexo.<span class="property">config</span>.<span class="property">marked</span> = <span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;</span><br><span class="line">  <span class="attr">gfm</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">pedantic</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">breaks</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">smartLists</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">smartypants</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">modifyAnchors</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">autolink</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">mangle</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">sanitizeUrl</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">dompurify</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">headerIds</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">anchorAlias</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">lazyload</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">prependRoot</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">postAsset</span>: <span class="literal">false</span>, <span class="comment">// HERE!</span></span><br><span class="line">  <span class="attr">external_link</span>: &#123;</span><br><span class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">exclude</span>: [],</span><br><span class="line">    <span class="attr">nofollow</span>: <span class="literal">false</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">descriptionLists</span>: <span class="literal">true</span></span><br><span class="line">&#125;, hexo.<span class="property">config</span>.<span class="property">marked</span>);</span><br><span class="line"></span><br><span class="line">renderer.<span class="property">disableNunjucks</span> = <span class="title class_">Boolean</span>(hexo.<span class="property">config</span>.<span class="property">marked</span>.<span class="property">disableNunjucks</span>);</span><br><span class="line"></span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;md&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;markdown&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mkd&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mkdn&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mdwn&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mdtxt&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br><span class="line">hexo.<span class="property">extend</span>.<span class="property">renderer</span>.<span class="title function_">register</span>(<span class="string">&#x27;mdtext&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, renderer, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
 
 <p>So, how can I change it? The object assign to <code>hexco.config.marked</code> looks like a configuration file for the plugin, so probably I can change it via changing Hexo’s configuration file. I visited the official website of the plugin <code>hexo-renderer-makred</code>, and in the document, I found the option’s definition:</p>
-<p><img src="/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/postAsset-option.PNG" alt="the postAsset option"></p>
+<p><img src="/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/postAsset-option.PNG" alt="the postAsset option"></p>
 <p>and it also said:</p>
-<p><img src="/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/change-config.PNG"></p>
+<p><img src="/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/change-config.PNG"></p>
 <p>Volia, problem solved! I just enable this option in my <code>_config.yml</code>, then regenerate the webpage, and everything is done!</p>
 <h1 id="Unsolved-Problems"><a href="#Unsolved-Problems" class="headerlink" title="Unsolved Problems"></a>Unsolved Problems</h1><p>If the article is a draft instead of a post, the images still aren’t displayed.</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://stephenchips.github.io/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/" data-id="cl7bqcgog0002buou2of140pn" data-title="Hexo pitfalls: `post_asset_folder` doesn&#39;t work" class="article-share-link">Share</a>
+      <a data-url="https://stephenchips.github.io/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/" data-id="cl7ikmjeh0002b7ord5big0ji" data-title="Hexo pitfalls: `post_asset_folder` doesn&#39;t work" class="article-share-link">Share</a>
       
       
       
@@ -142,9 +142,9 @@
 <nav id="article-nav">
   
   
-    <a href="/2022/08/20/Creating-a-Hexo-Blog-on-your-Github-Pages-Steps-and-Pitfalls/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2022/09/01/Monotonic-Stack-Introduction-Properties-Implementations-and-Application/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Creating a Hexo Blog on your Github Pages: Steps and Pitfalls</div>
+      <div class="article-nav-title">Monotonic Stack: Introduction, Properties, Implementations and Applications</div>
     </a>
   
 </nav>
@@ -183,7 +183,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">August 2022</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">September 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">August 2022</a></li></ul>
     </div>
   </div>
 
@@ -196,7 +196,11 @@
       <ul>
         
           <li>
-            <a href="/2022/08/27/Hexo-pitfalls-post-asset-folder-doesn-t-work/">Hexo pitfalls: `post_asset_folder` doesn&#39;t work</a>
+            <a href="/2022/09/01/Hexo-pitfalls-post-asset-folder-doesn-t-work/">Hexo pitfalls: `post_asset_folder` doesn&#39;t work</a>
+          </li>
+        
+          <li>
+            <a href="/2022/09/01/Monotonic-Stack-Introduction-Properties-Implementations-and-Application/">Monotonic Stack: Introduction, Properties, Implementations and Applications</a>
           </li>
         
           <li>
