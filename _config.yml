@@ -18,16 +18,19 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Your awesome title
-email: your-email@example.com
+title: Stephen Chips
+email: tcw6991@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+    I am humble programmer lives in Guangzhou, China, who like building website, making apps
+    and learning all sorts of cool programming stuffs. Currently I am looking for a NICE job.
+    The blog is mainly about programming techniques。 but occasionally I wil posts things about 
+    foods, travel and other interesting things.
+
+    我是一个卑微的程序员，住在中国广州，喜欢建立网站，制作应用程序和学习各种很酷的编程东西。目前正在寻找一份好的工作
+    这个博客中的文章主要是关于编程技术的，主要用英文或中文撰写。不过偶尔我也会发一些关于食物、旅行和其他有趣事情的文章。
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+github_username:  StephenChips
 
 # Build settings
 theme: minima
