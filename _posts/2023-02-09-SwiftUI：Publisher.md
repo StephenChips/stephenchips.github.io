@@ -97,6 +97,8 @@ class Program {
 }
 ```
 
+# `onReceive`
+
 如果`AnyCancellable`赋值给函数的一个局部变量，那么当离开变量的作用域后，侦听随即停止。这是一个坑：当我们调用完`sink`函数就结束了，随即`AnyCancellable`取消订阅Publisher，导致`sink`里边的代码永远不会被执行。如果里边代码是用来更新试视图的，那么视图将不会更新。
 
 ```swift
@@ -113,10 +115,22 @@ class Program {
 }
 ```
 
+# View订阅Publisher
+
+```swift
+someView.onReceive { thingsPublisherPublishes in
+    // 实现与thingsPublisherPublishes相关的代码
+}
+```
+
+当回调执行后，将会更新视图。
+
 # 相关资料
 
 1. [Medium: Efficient resource handling — resource acquisition is initialization (RAII) in Swift](https://medium.com/@redhotbits/resource-acquisition-is-initialization-raii-in-swift-62f856063a74)
 2. [Swift By Sundell: Managing self and cancellable references when using Combine](https://www.swiftbysundell.com/articles/combine-self-cancellable-memory-management/)
-3. [苹果开发文档：receive(on:options:)](https://developer.apple.com/documentation/combine/publisher/receive(on:options:))
-4. [苹果开发文档：AnyCanellable](https://developer.apple.com/documentation/combine/anycancellable)
-5. [苹果开发文档：Receiving and Handling Events with Combine](https://developer.apple.com/documentation/combine/receiving-and-handling-events-with-combine)
+3. [苹果开发文档：Publisher](https://developer.apple.com/documentation/combine/publisher)
+4. [苹果开发文档：receive(on:options:)](https://developer.apple.com/documentation/combine/publisher/receive(on:options:))
+5. [苹果开发文档：AnyCanellable](https://developer.apple.com/documentation/combine/anycancellable)
+6. [苹果开发文档：Receiving and Handling Events with Combine](https://developer.apple.com/documentation/combine/receiving-and-handling-events-with-combine)
+
