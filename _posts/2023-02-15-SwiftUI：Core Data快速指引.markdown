@@ -1,5 +1,5 @@
 ---
-title: Core Data快速指引
+title: SwiftUI：Core Data快速指引
 tags: SwiftUI
 ---
 
@@ -107,13 +107,13 @@ struct YourView: View {
 
 `FetchResult`对象与普通数组别无二致，能够遍历，支持随机访问。
 
-# 为什么CoreData对象字段都是可选的
+# 为什么NSManagedObject字段都是可选的
 
-Swift编程语言中，如果一个字段不是可选的，那么它永远不会为`nil`。这一点对于Core Data对象来说太过于严苛了，他只需要在保存的时候（调用`viewContext.save()`时），确保所有非可选字段都有值就行，其他时候有没有值对它并不重要。
+Swift编程语言中，如果一个字段不是可选的，那么它永远不会为`nil`。这一点对于NSManagedObject对象来说太过于严苛了，他只需要在保存的时候（调用`viewContext.save()`时），确保所有非可选字段都有值就行，其他时候有没有值对它并不重要。
 
-你可以把Core Data对象理解成临时手稿，而不是真实的数据库数据。所有的修改都会先写到这份手稿上，只有当你调用`viewContext.save()`，他才会将这些修改更新到数据库中。
+你可以把NSManagedObject对象理解成临时手稿，而不是真实的数据库数据。所有的修改都会先写到这份手稿上，只有当你调用`viewContext.save()`，他才会将这些修改更新到数据库中。
 
-# Core Data对象都是`ObservableObject`
+# NSManagedObject对象都是`ObservableObject`
 
 根据[这里](https://developer.apple.com/forums/thread/121897)，所有`NSManagedObject`都是`ObservableObject`和`Publisher`，所以可以这么做：
 
@@ -141,11 +141,11 @@ struct NotebookView: View {
 
 [https://developer.apple.com/videos/play/wwdc2019/230](https://developer.apple.com/videos/play/wwdc2019/230)
 
-# 新建Core Data对象
+# 新建NSManagedObject对象
 
 下面例子展示了如何创建笔记本。
 
-注意新建CoreData对象并不意味着往数据库插入数据，你需要调用`viewContext.save()`才能将新建的对象存到数据库中
+注意新建NSManagedObject并不意味着往数据库插入数据，你需要调用`viewContext.save()`才能将新建的对象存到数据库中
 
 ```swift
 struct NotebookView: View {
@@ -159,7 +159,7 @@ struct NotebookView: View {
 }
 ```
 
-# 修改Core Data对象
+# 修改NSManagedObject对象
 
 ```swift
 struct NotebookView: View {
@@ -172,7 +172,7 @@ struct NotebookView: View {
 }
 ```
 
-# 设置Core Data一对一关系（1:1 Relationship）
+# 设置一对一关系（1:1 Relationship）
 
 ```swift
 struct NoteDetailView: View {
@@ -194,7 +194,7 @@ struct NoteDetailView: View {
 通过强制类型转换，将`NSSet`转换成`Set`或者`Array`，然后再遍历；
 
 
-# Core Data一对多关系
+# 一对多关系
 
 ## 获取
 
@@ -262,9 +262,9 @@ struct NoteView: View {
 }
 ```
 
-# 将CoreData对象绑定到TextField中
+# 将NSManagedObject绑定到TextField中
 
-如果你想达到“修改后立刻保存”的效果，那么可以使用如下的方法，将CoreData对象绑定到`TextField`中：
+如果你想达到“修改后立刻保存”的效果，那么可以使用如下的方法，将NSManagedObject绑定到`TextField`中：
 
 ```swift
 TextField("Title", text: Binding {
