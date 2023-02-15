@@ -1,6 +1,6 @@
 # 在项目中添加Core Data
 
-首先，新建一个数据模型文件（文件 -> File -> New -> File... -> Core Data -> Data Model），然后定义应用的数据模型（详见[这里]({% post_url 2023-02-10-SwiftUI：定义Core Data数据模型 %})）
+首先，新建一个数据模型文件（文件 -> File -> New -> File... -> Core Data -> Data Model），并在里边定义应用的数据模型。
 
 然后，在项目中创建代码文件`Persistence.swift`，并填入下面代码：
 
