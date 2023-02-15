@@ -1,3 +1,8 @@
+---
+title: Core Data快速指引
+tags: SwiftUI
+---
+
 # 在项目中添加Core Data
 
 首先，新建一个数据模型文件（文件 -> File -> New -> File... -> Core Data -> Data Model），并在里边定义应用的数据模型。
