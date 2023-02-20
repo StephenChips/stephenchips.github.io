@@ -151,9 +151,9 @@ struct Shape: Codable {
 }
 ```
 
-# `JSONEncoder`
+# 将`Codable`对象变成JSON文件
 
-顾名思义，JSONEncoder就是用来将`Encodable`对象编码成JSON的。它的用法很简单：创建一个`JSONEncoder`对象，屌用其`write`方法，然后就可以得到一个包含JSON数据的`Data`对象了。注意在使用前需要`import Foundation`。
+要将`Codable`对象变成变成JSON文件，需要用到`JSONEncoder`。顾名思义，它就是用来将`Encodable`对象编码成JSON的。它的用法很简单：创建一个`JSONEncoder`对象，调用其`write`方法，然后就可以得到一个包含JSON数据的`Data`对象了。注意在使用前需要`import Foundation`。
 
 ```swift
 import Foundation
@@ -162,7 +162,7 @@ let shape = Shape(color: .red, type: .circle(radius: 5))
 let data = try JSONEncoder().encode(shape)
 ```
 
-# `Data`
+# `Data`对象
 
 我们可以将`Data`对象变成字符串打印出来，这样我们就得到`Shape`对象编码成JSON的样子。
 
@@ -296,4 +296,4 @@ enum ShapeType: Codable {
     case rectangle(width: Double, height: Double)
     case square(edgeLength: Double)
 }
-```···
+```
