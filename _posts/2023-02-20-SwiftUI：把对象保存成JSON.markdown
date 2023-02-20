@@ -33,7 +33,7 @@ enum ShapeType {
 
 `Shape`对象只是为了这篇文章而专门构造的，并不来自某段程序，但你可以把它想成画板工具的一个数据模型。
 
-# `Codable`
+# `Codable`、`Decodable`和`Encodable`协议
 
 要想让`Shape`变成JSON，以及想从`JSON`中构建`Shape`，我们需要先让`Shape`对象遵从`Codable`协议。该协议的定义如下：
 
