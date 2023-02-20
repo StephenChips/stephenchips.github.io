@@ -107,7 +107,7 @@ enum ShapeType: Codable {
 
 通过自己编写`func encode(to encoder: Encoder) throws`和`init(from decoder: Decoder)`，我们就能控制输出JSON的内容和格式。比如，我们规定`Shape`输出成JSON时，需要满足以下几点需求：
 
-1. `Shape.isPicked`出现在JSON中；
+1. `Shape.isPicked`不应该出现在JSON中；
 2. 如果`Shape.color = none`，那么color字段不应该出现在JSON中。
 
 那么，我可以通过自己定义编码`encode(to encoder:)`与解码`init(from decoder:)`过程，满足上面的要求。
