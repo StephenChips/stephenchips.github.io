@@ -4,10 +4,11 @@ title: SwiftUI：把对象保存成JSON
 
 # 涉及知识点
 
-1. 如何使用`Codable`编码、解码对象
-2. 如何使用`JSONEncoder`将`Codable`对象变成`Data`对象
-3. 如何将`Data`对象保存到文件系统中
-5. 四个编译器自动生成代码的`protocol`
+1. 如何使用`Codable`编码、解码对象；
+2. 如何使用`JSONEncoder`将`Codable`对象变成`Data`对象；
+3. 如何将`Data`对象保存到文件系统中；
+4. 如何从`URL`（文件路径或网络地址）加载`Codable`对象；
+5. 四个编译器自动生成代码的`protocol`。
 
 # 文章内容
 
