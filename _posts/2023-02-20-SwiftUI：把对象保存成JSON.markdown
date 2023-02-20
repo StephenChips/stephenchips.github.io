@@ -110,7 +110,7 @@ enum ShapeType: Codable {
 1. `Shape.isPicked`出现在JSON中；
 2. 如果`Shape.color = none`，那么color字段不应该出现在JSON中。
 
-那么，我可以通过自己定义编码（`encode(to encoder:)`）与解码`init(from decoder:)`过程，满足上面的要求。
+那么，我可以通过自己定义编码`encode(to encoder:)`与解码`init(from decoder:)`过程，满足上面的要求。
 
 ```swift
 struct Shape: Codable {
