@@ -105,7 +105,7 @@ struct YourView: View {
 3. 带`@FetchRequest`同时是一个`ObservableObject`。在结果集变更后，`@FetchRequest`会自动获取新数据并更新视图。
 3. 因为需要监听数据库的变动，所以`@FetchRequest`内部会用到Core Data上下文对象，所以在使用`@FetchRequest`之前，需要确保Core Data上下文对象已经设置到环境变量`.managedObjectContext`中。
 
-`FetchResult`对象与普通数组别无二致，能够遍历，支持随机访问。
+`FetchResult`对象与普通数组没啥不同，能够遍历，支持随机访问。
 
 # 为什么NSManagedObject字段都是可选的
 
@@ -141,11 +141,9 @@ struct NotebookView: View {
 
 [https://developer.apple.com/videos/play/wwdc2019/230](https://developer.apple.com/videos/play/wwdc2019/230)
 
-# 新建NSManagedObject对象
+# 往Core Data插入对象
 
-下面例子展示了如何创建笔记本。
-
-注意新建NSManagedObject并不意味着往数据库插入数据，你需要调用`viewContext.save()`才能将新建的对象存到数据库中
+下面代码往Core Data中插入一个`Notebook`对象（`Notebook`是一个`NSManagedObject`）。
 
 ```swift
 struct NotebookView: View {
@@ -188,11 +186,6 @@ struct NoteDetailView: View {
 ```
 
 如果Category不存在，那么它会先被创建。
-
-# 获取、添加、删除Core Data一对多关系
-
-通过强制类型转换，将`NSSet`转换成`Set`或者`Array`，然后再遍历；
-
 
 # 一对多关系
 
@@ -276,7 +269,7 @@ TextField("Title", text: Binding {
 ```
 
 
-# 将`Binding<T?>`变成`Binding<T>`?
+# 将`Binding<T?>`变成`Binding<T>?`
 
 使用构造函数Binding(_:)，比如将`Binding<Category?>`变成`Binding<Category>?`，就可以这么做：
 

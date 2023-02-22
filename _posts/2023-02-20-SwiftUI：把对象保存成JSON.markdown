@@ -32,7 +32,7 @@ enum ShapeType {
 }
 ```
 
-`Shape`对象只是为了这篇文章而专门构造的，并不来自某段程序，但你可以把它想成画板工具的一个数据模型。
+`Shape`对象是虚构的，并不来自某段程序，但你可以把它想成某个画板工具的数据模型。
 
 # `Codable`、`Decodable`和`Encodable`协议
 
@@ -73,7 +73,7 @@ public protocol Decodable {
 }
 ```
 
-只要对象中所有的属性都遵守`Codable`协议，那么Swift编译器就会自动帮你生成这两个函数，所以除非你有特殊要求，我们并不需要编写这两个函数。Swift中所有常见的类型，如`Int`、`String`、`URL`、数组、字典都遵从`Codable`协议。对于`enum`，只要枚举值的参数都是`Codable`的，或者所有枚举值都没有参数，那么我们也不需要自己编写这两个函数。我们的`ShapeColor`和`ShapeType`都满足这样的条件，所以我们直接加上`Codable`协议即可：
+只要对象中所有的属性都遵守`Codable`协议，那么Swift编译器就会自动帮你生成这两个函数，所以除非你有特殊要求，我们并不需要编写这两个函数。Swift中所有常见的类型，如`Int`、`String`、`URL`、数组、字典都遵从`Codable`协议。对于`enum`，只要所有枚举值参数都是`Codable`，或者压根就没有参数，那么编译器就会帮你生成。我们的`ShapeColor`和`ShapeType`都满足这样的条件，所以我们直接加上`Codable`协议即可：
 
 ```swift
 struct Shape: Codable {
@@ -99,6 +99,8 @@ enum ShapeType: Codable {
 2. `Decodable`：自动生成`init(from decoder: Decoder) throws`；
 3. `Equatable`：自动生成`static func ==(a: Type, b: Type)`，其中`Type`是对象类型；
 4. `Hashable`： 自动生成`var hashValue: Int { get }`。
+
+还记得`typealias Codable = Encodable & Decodable`吗？使用它，就等于使用`Encodable`和`Docodable`两个协议。
 
 你可以从这里看到更详细的规则：[https://github.com/apple/swift-evolution/blob/main/proposals/0185-synthesize-equatable-hashable.md](https://github.com/apple/swift-evolution/blob/main/proposals/0185-synthesize-equatable-hashable.md)
 
@@ -231,7 +233,6 @@ struct Shape {
 ```
 
 # 完整例子
-
 
 ```swift
 import Foundation

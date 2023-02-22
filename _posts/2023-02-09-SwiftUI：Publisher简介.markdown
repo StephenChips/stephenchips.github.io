@@ -33,9 +33,9 @@ class MyViewModel: ObservableObject {
 
 要订阅Publisher，只需要调用Publisher的公有方法：`sink(receiveCompletion:receiveValue:)`。该方法的两个参数均是闭包，当Publisher产生了异常或关闭了，就会触发`receiveComplection`，而当Publisher发布了新的数据，就会触发`receiveValue`。
 
-如果这个Publisher不会抛出异常（类型为`Publisher<Output, Never>`，也就是说`Failure = Never`），那么你就可以用`sink(receiveValue:)`重载方法，省去注册`receiveCompletion`函数。如果你在一个会抛出异常的函数的Publisher中使用该方法，会导致编译错误。
+如果这个Publisher不会抛出异常（类型为`Publisher<Output, Never>`，也就是说`Failure = Never`），那么你就可以用`sink(receiveValue:)`重载方法，它省去了`receiveCompletion`函数，让我们能写出更加简练的代码。再次强调，请注意一定要确保`Publisher`不会抛出异常，否则使用该方法会导致编译错误。
 
-下面是一个小例子，它定义了一个视图，它能从某个URL下载图片，并将该图片展示出来。
+下面的`UIImageView`使用`URLSession.shared.dataTaskPublisher(for:)`方法从某URL（可以是文件路径，也可以是网络地址）下载图片并将它展示出来。该方法返回的就是一个`Publisher`，我们使用`.sink`方法订阅这个`Publisher`，好在下载完图片后，让`Publisher`调用设置好的回调函数，将新图片展示在界面上。
 
 ```swift
 class URLImageView: View {

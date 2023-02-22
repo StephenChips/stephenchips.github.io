@@ -44,8 +44,9 @@ struct PhotoLibrary: UIViewControllerRepresentable {
             else { return handlePickedImage(nil) }
             
             pickedPhotoItemProvider.loadObject(ofClass: UIImage.self) { [] photo, error in
+                // 注意loadObject会在后台线程异步执行，而更新图片属于UI操作，所以我们需要将相关代码包在
+                // `DispatchQueue.main.async`中，不然虽然图片会设置成功，但是在应用退出之后就会消失，还原会旧图片。
                 DispatchQueue.main.async {
-                    // 这里的代码必须要包在DispatchQueue.main.async中，不然虽然能够成功设置图片，但是退出应用之后就会消失。
                     self.handlePickedImage(photo as? UIImage)
                 }
             }
