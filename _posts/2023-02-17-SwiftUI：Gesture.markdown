@@ -11,24 +11,24 @@ Following texts are from the apple's documentation: [https://developer.apple.com
 > ```swift
 > struct TapGesture
 > ```
-
+>
 > A gesture that recognizes one or more taps.
-
+>
 > ```swift
 > struct SpatialTapGesture
 > ```
 > A gesture that recognizes one or more taps and reports their location.
-
+>
 > ```swift
 > struct LongPressGesture
 > ```
 > A gesture that succeeds when the user performs a long press.
-
+>
 > ```swift
 > struct DragGesture
 > ```
 > A dragging motion that invokes an action as the drag-event sequence changes.
-
+>
 > ```swift
 > struct MagnificationGesture
 > ```
@@ -250,7 +250,7 @@ And here is the explanation from the apple documentation ([original link]()):
 > func exclusively<Other>(before: Other) -> ExclusiveGesture<Self, Other>
 > ``` 
 > Combines two gestures exclusively to create a new gesture where only one gesture succeeds, giving precedence to the first gesture.
-
+>
 > ```swift
 > func sequenced<Other>(before: Other) -> SequenceGesture<Self, Other>
 > ```
