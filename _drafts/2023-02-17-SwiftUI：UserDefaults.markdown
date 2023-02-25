@@ -1,6 +1,6 @@
 # 使用UserDefaults存储数据
 
-`UserDefaults`是一个简单的Key-Value数据库，通常用它来储存用户偏好、应用设置。当然如果你的应用比较简单，那么也可以把用户数据也保存在这里。如果应用的数据模型比较复杂，那么使用CoreData会更加合适。
+`UserDefaults`是一个简单的Key-Value数据库，通常用它来储存帐号信息和应用设置。当然如果你的应用比较简单，那么也可以把用户数据也保存在这里。如果应用的数据模型比较复杂，那么使用CoreData会更加合适。
 
 # 使用方法
 
@@ -171,7 +171,7 @@ extension UserDefaults {
 }
 ```
 
-然后我们就能够轻松设置`UserDefaults`，不用担心`typo`造成的bug，也能够享受到XCode的智能提示了。
+这样我们就不用担心`typo`造成的bug，也能够享受到XCode的智能提示了。
 
 ```swift
 UserDefaults.AccountInfo.set(value: "chilli cheng", forKey: .userName)
