@@ -1,46 +1,48 @@
-# Gesture
+---
+title: SwiftUI：Gesture
+---
 
-There are two kinds of gestures: **Discrete Gesture** and **Continuous Gesture**. A discrete finishes instantly after it starts. There isn't intermediate state involved. One of the most classic example is tapping. Other discrete gestures include *double tapping* and *long pressing*. Of course, there are more. On the contrary, **continuous gesture** lasts for an amount of time. Many common gestures are continuous gesture, for example, zooming (`MaginificationGesture`), panning (`DragGesture`) and rotating (`RotationGesture`). In this article, I will show you have to add these gestures into your app, and how to combine multiple gesture together, letting them happens simultaneously, exclusively, or sequentially (a.k.a, one by one).
+There are two kinds of gestures: **discrete gesture** and **continuous gesture**. A discrete gesture fires and finishes instantly. There isn't any intermediate state involved. A classic example is single tap. On the contrary, **continuous gesture** lasts for an amount of time. Many common gestures belong to continuous gestures, for example, `MaginificationGesture` and `DragGesture`. In this post, I will show you how to add these gestures into your app, and how to combine two gesture to form a combined gesture.
 
 ## SwiftUI built-in gestures
 
 Following texts are from the apple's documentation: [https://developer.apple.com/documentation/swiftui/gestures](https://developer.apple.com/documentation/swiftui/gestures).
 
-    ```swift
-    struct TapGesture
-    ```
+> ```swift
+> struct TapGesture
+> ```
 
-    A gesture that recognizes one or more taps.
+> A gesture that recognizes one or more taps.
 
-    ```swift
-    struct SpatialTapGesture
-    ```
-    A gesture that recognizes one or more taps and reports their location.
+> ```swift
+> struct SpatialTapGesture
+> ```
+> A gesture that recognizes one or more taps and reports their location.
 
-    ```swift
-    struct LongPressGesture
-    ```
-    A gesture that succeeds when the user performs a long press.
+> ```swift
+> struct LongPressGesture
+> ```
+> A gesture that succeeds when the user performs a long press.
 
-    ```swift
-    struct DragGesture
-    ```
-    A dragging motion that invokes an action as the drag-event sequence changes.
+> ```swift
+> struct DragGesture
+> ```
+> A dragging motion that invokes an action as the drag-event sequence changes.
 
-    ```swift
-    struct MagnificationGesture
-    ```
-    A gesture that recognizes a magnification motion and tracks the amount of magnification.
+> ```swift
+> struct MagnificationGesture
+> ```
+> A gesture that recognizes a magnification motion and tracks the amount of magnification.
 
-    ```swift
-    struct RotationGesture
-    ```
-    A gesture that recognizes a rotation motion and tracks the angle of the rotation.
+> ```swift
+> struct RotationGesture
+> ```
+> A gesture that recognizes a rotation motion and tracks the angle of the rotation.
 
 
 # Discrete Gesture
 
-Among all distrete gestures the most common and simplest one must be the tapping. It is so commonly-used that Apple defines a handy method on the `View` class, letting you to add tapping to your view quickly - `onTapGesture`. In fact, using discrete gesture is quite simple, so I will use `TapGesture` in this section to demonstrate all discrete gesture's usage, instead of showing all SwiftUI built-in gestures boringly.
+Among all distrete gestures the most common and simplest one is tapping. It is so commonly-used that Apple defines a handy method on the `View` class - `onTapGesture`. In fact, discrete gesture is very simple, so I will show to how to use `TapGesture`, and you will probably know how other discrete gestures should be used.
 
 To create a `TapGesture`, the simplest way is to appends a `onTapGesture` methods on the view where tapping happens. For example, hypothetically there is a canvas app, and I want to informed users when the canvas is tapped, then following code will suffice:
 
@@ -61,30 +63,27 @@ Click the *run* button at the top-left corner of XCode, tap inside `ZStack`, and
 
 # Custom Discrete Gesture
 
-Sometimes you have a auxiliary requirement on tapping. for example you want the app to automatically scale the canvas to a reasonably size by double tapping. To do this, you can create `TapGesture` class directly with the `count` argument be set to `2`, and sets the callback to method `onEnded` (fires when a double tap finishes), then pass it to the `gesture` method of the target view. To make the code more tidy, put the creation code in a dedicate method.
+Sometimes you have a auxiliary requirement on tapping. for example you want to double tap the text. To do this, you can create `TapGesture` class directly with the `count` argument set to `2`, set the `onEnded`'s callback, pass it to the `gesture` method of the target view, then it's OK. Here is an example:
 
 ```swift
 struct Canvas: View {
     var body: some View {
-        ZStack {
-            // Where the canvas elements are placed.
-        }
-        .gesture(gestureDoubleTapToResizeCanvas())
+        Text("hello, world").gesture(gestureDoubleTapToResizeCanvas())
     }
 
     private func gestureDoubleTapToResizeCanvas() -> some Gesture {
         TapGesture(count: 2).onEnded {
-            // codes that will resize the canvas to an ideal size
+            print("tap twice")
         }
     }
 }
 ```
 
-That is it. That is how you customize a built-in SwiftUI gesture - just create an instance by yourself and specify its arguments and callback functions. Nothing could be more complicated than this.
+Other discrete gestures are as simple as this. You customize it by creating an instance and specify its argument and callbacks.
 
 # Continuous Gesture
 
-Gesture like `DraggingGesture` and `MagnificationGesture` are typically continous gesture. They last for an amount of time and response touch events from users. There are two methods on gestures that can help use to customize a continuous gesture, which are `onChange(_ action:)` and `updating(_ action:)`.
+Gesture like `DraggingGesture` and `MagnificationGesture` are typically continous gesture. They runs for an amount of time and response touch events from users. There are two methods on gestures that can help use to customize a continuous gesture, which are `onChange(_ action:)` and `updating(_ action:)`.
 
 ## `onChange(_ action:)`
 
@@ -247,20 +246,20 @@ There are three methods define on a `Gesture` that can combine another `Gesture`
 
 And here is the explanation from the apple documentation ([original link]()): 
 
-    ```swift
-    func exclusively<Other>(before: Other) -> ExclusiveGesture<Self, Other>
-    ``` 
-    Combines two gestures exclusively to create a new gesture where only one gesture succeeds, giving precedence to the first gesture.
+> ```swift
+> func exclusively<Other>(before: Other) -> ExclusiveGesture<Self, Other>
+> ``` 
+> Combines two gestures exclusively to create a new gesture where only one gesture succeeds, giving precedence to the first gesture.
 
-    ```swift
-    func sequenced<Other>(before: Other) -> SequenceGesture<Self, Other>
-    ```
-    Sequences a gesture with another one to create a new gesture, which results in the second gesture only receiving events after the first gesture succeeds.
-    
-    ```swift
-    func simultaneously<Other>(with: Other) -> SimultaneousGesture<Self, Other>
-    ```
-    Combines a gesture with another gesture to create a new gesture that recognizes both gestures at the same time.
+> ```swift
+> func sequenced<Other>(before: Other) -> SequenceGesture<Self, Other>
+> ```
+> Sequences a gesture with another one to create a new gesture, which results in the second gesture only receiving events after the first gesture succeeds.
+> 
+> ```swift
+> func simultaneously<Other>(with: Other) -> SimultaneousGesture<Self, Other>
+> ```
+> Combines a gesture with another gesture to create a new gesture that recognizes both gestures at the same time.
 
 
 `simultanously(with:)`、`exclusively(before:)` and `sequenced(before:)` are three functions that generate combined gestures. They are not gestures themself. But for simplicity, in the following post their names refer to the gesture they generate too. Please distinguish them by context. And I will named the gestures that attach to views via method `gesture(_)` as *chained gesture*, mainly for separate them from gestures that are generated from three combining functions just mentioned above.
@@ -319,3 +318,8 @@ gestureDoubleTap()
 ```
 
 That will result in one `tap twice` followed by two `tap once` after double tap.
+
+# limitations
+
+In my opinion SwiftUI's gesture API is suitable for many situation, but not all - just like a bag of all-purpose flour isn't quite suitable for making cake. If the application you build is gesture-rich, for instance a professional drawing app like *procrate*, soon you'll reach the edge of its capability. For example, I tried to write a gesture that can drag, rotate and pinch an image in the same time, but I didn't success, none of three combined gesture can help. For this situation I think I should consider using UIKit or event SpriteKit, but that will be more complicated. Maybe as new WWDC is held more new features will come, and the gesture API will become more capable, Well, let's see.
+
