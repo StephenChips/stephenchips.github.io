@@ -283,7 +283,7 @@ struct DemoView: View {
 }
 ```
 
-When I first tap the text, the `gestureSingleTap` will perform, and the underlying events get reserved. Wwhen I tap again, there will be two touch events in total, thus causing `gestureDoubleTap` to perform. The result will be same if I swap these two gesture's order, that is `gestureSingleTap().simultaneously(with:gestureDoubleTap())`.
+When I first tap the text, the `gestureSingleTap` will perform, and the underlying events get reserved. When I tap again, there will be two touch events in total, thus causing `gestureDoubleTap` to perform. The result will be same if I swap these two gesture's order, that is `gestureSingleTap().simultaneously(with:gestureDoubleTap())`.
 
 ```swift
 struct DemoView: View {
@@ -316,8 +316,6 @@ gestureDoubleTap()
     .sequenced(before: gestureSingleTap())
     .sequenced(before: gestureSingleTap())
 ```
-
-That will result in one `tap twice` followed by two `tap once` after double tap.
 
 # limitations
 
