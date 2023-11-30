@@ -1,8 +1,6 @@
 ---
-layout: post
 title: "在Windows下搭建LLVM开发环境"
 date: 2023-11-30 20:47
-categories: LLVM Compiler
 ---
 
 最近在跟做LLVM官方教程[Kaleidoscope](https://llvm.org/docs/tutorial/)，完成Lexer和Parser两章后，就需要使用LLVM来生成IR了。在Linux和MacOS上安装LLVM并不难，只需要使用包管理器安装好LLVM，就能在项目中引用头文件了，但是在Windows上就没有这么简单。这几天用来编程的时间里，我啥都没做，就光研究怎么把LLVM装好，终于在今天下午搞定了，总共花了我大概一个星期的时间。下文我将写下安装、配置LLVM的详细步骤，方便日后再次安装时查阅。
